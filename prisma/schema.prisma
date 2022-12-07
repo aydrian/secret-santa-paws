@@ -15,7 +15,10 @@ model User {
   name         String
   email        String        @unique
   passwordHash String        @map("password_hash")
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   Participants Participant[]
+  Exchanges    Exchange[]
 
   @@map("users")
 }
@@ -24,6 +27,8 @@ model Exchange {
   id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title        String
   isArchived   Boolean       @map("is_archived")
+  ownerId      String        @map("owner_id") @db.Uuid
+  Owner        User          @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   Participants Participant[]
 
   @@map("exchanges")
