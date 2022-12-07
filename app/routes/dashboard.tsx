@@ -1,12 +1,23 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { requireUserId } from "~/utils/session.server";
+import { useLoaderData } from "@remix-run/react";
+import { getUser, requireUserId } from "~/utils/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUserId(request);
+  const user = await getUser(request);
 
-  return {};
+  return { user };
 };
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  const { user } = useLoaderData();
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <h2>Welcome {user.name}</h2>
+      <form method="post" action="/logout">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  );
 }

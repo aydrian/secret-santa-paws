@@ -4,12 +4,13 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import { db } from "./db.server";
 
 type LoginForm = {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 };
 
 export async function register({ name, email, password }: LoginForm) {
+  name = name || email;
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
     data: { name, email, passwordHash }
@@ -17,7 +18,7 @@ export async function register({ name, email, password }: LoginForm) {
   return { id: user.id, email };
 }
 
-export async function login({ name, email, password }: LoginForm) {
+export async function login({ email, password }: LoginForm) {
   const user = await db.user.findUnique({
     select: { id: true, name: true, email: true, passwordHash: true },
     where: { email }
