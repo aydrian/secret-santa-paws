@@ -24,13 +24,13 @@ function validatePassword(password: unknown) {
   }
 }
 
-function validateUrl(url: any) {
-  let urls = ["/dashboard", "/"];
-  if (urls.includes(url)) {
-    return url;
-  }
-  return "/dashboard";
-}
+// function validateUrl(url: any) {
+//   let urls = ["/dashboard", "/", "/invite"];
+//   if (urls.includes(url)) {
+//     return url;
+//   }
+//   return "/dashboard";
+// }
 
 type ActionData = {
   formError?: string;
@@ -44,7 +44,8 @@ export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const email = form.get("email");
   const password = form.get("password");
-  const redirectTo = validateUrl(form.get("redirectTo") || "/dashboard");
+  // const redirectTo = validateUrl(form.get("redirectTo") || "/dashboard");
+  const redirectTo = form.get("redirectTo") || "/dashboard";
   if (
     typeof email !== "string" ||
     typeof password !== "string" ||

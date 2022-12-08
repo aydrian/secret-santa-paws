@@ -28,6 +28,8 @@ model Exchange {
   title        String
   isArchived   Boolean       @default(false) @map("is_archived")
   ownerId      String        @map("owner_id") @db.Uuid
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   Owner        User          @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   Participants Participant[]
 
@@ -35,17 +37,19 @@ model Exchange {
 }
 
 model Participant {
-  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   address1   String
   address2   String?
   city       String
   state      String
   zip        String
   country    String
-  dogType    String  @map("dog_type")
-  userId     String  @map("user_id") @db.Uuid
-  exchangeId String  @map("exchange_id") @db.Uuid
-  referrerId String? @map("referrer_id") @db.Uuid
+  dogType    String   @map("dog_type")
+  userId     String   @map("user_id") @db.Uuid
+  exchangeId String   @map("exchange_id") @db.Uuid
+  referrerId String?  @map("referrer_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   User      User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   Exchange  Exchange      @relation(fields: [exchangeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
