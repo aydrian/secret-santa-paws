@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { Prisma } from "@prisma/client";
 import { json } from "@remix-run/node";
-import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { db } from "~/utils/db.server";
 import { requireUserId } from "~/utils/session.server";
@@ -67,6 +67,9 @@ export default function Dashboard() {
             </li>
           );
         })}
+        <li>
+          <Link to="new">New Exchange</Link>
+        </li>
       </ul>
       <Outlet />
     </div>
