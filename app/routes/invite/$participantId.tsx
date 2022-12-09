@@ -8,6 +8,7 @@ import {
   useLoaderData,
   useLocation
 } from "@remix-run/react";
+import invariant from "tiny-invariant";
 import { db } from "~/utils/db.server";
 import { createUserSession, getUser, register } from "~/utils/session.server";
 
@@ -86,6 +87,7 @@ const badRequest = (data: ActionData) => json(data, { status: 400 });
 
 export const action: ActionFunction = async ({ params, request }) => {
   const { participantId } = params;
+  invariant(participantId, "participantId query param must exist");
   const form = await request.formData();
   const exchangeId = form.get("exchangeId");
   const address1 = form.get("address1");

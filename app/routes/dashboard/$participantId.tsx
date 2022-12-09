@@ -46,9 +46,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     });
   }
 
-  invariant(exchange.Referrer, "should have a referrer");
-  invariant(exchange.Referrer.referrerId, "referrer should have a referrer id");
-
   const grandReferrer = await db.participant.findUnique({
     select: {
       address1: true,

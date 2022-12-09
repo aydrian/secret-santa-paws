@@ -2,6 +2,12 @@ import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
+type ParticipantIds = {
+  id1: string;
+  id2: string;
+  id3: string;
+};
+
 async function seed() {
   // Create 3 users
   const users = await getUsers();
@@ -30,31 +36,34 @@ async function seed() {
   };
 
   // Make Users participants of exchange
+  // Grab 3 UUIDs to use as participantIds
+  const [participantIds] = await db.$queryRaw<
+    Array<ParticipantIds>
+  >`SELECT gen_random_uuid() AS "id1", gen_random_uuid() AS "id2", gen_random_uuid() AS "id2" `;
   const [participant1, participant2, participant3] = await Promise.all(
     [
-      { ...tmp, userId: user1.id },
-      { ...tmp, userId: user2.id },
-      { ...tmp, userId: user3.id }
+      {
+        ...tmp,
+        id: participantIds.id1,
+        userId: user1.id,
+        referrerId: participantIds.id2
+      },
+      {
+        ...tmp,
+        id: participantIds.id2,
+        userId: user2.id,
+        referrerId: participantIds.id3
+      },
+      {
+        ...tmp,
+        id: participantIds.id3,
+        userId: user3.id,
+        referrerId: participantIds.id1
+      }
     ].map((participant) => {
       return db.participant.create({ data: participant });
     })
   );
-
-  // Update referrerIds in round
-  await Promise.all([
-    db.participant.update({
-      data: { referrerId: participant2.id },
-      where: { id: participant1.id }
-    }),
-    db.participant.update({
-      data: { referrerId: participant3.id },
-      where: { id: participant2.id }
-    }),
-    db.participant.update({
-      data: { referrerId: participant1.id },
-      where: { id: participant3.id }
-    })
-  ]);
 }
 
 async function getUsers() {
