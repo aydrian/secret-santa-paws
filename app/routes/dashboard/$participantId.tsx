@@ -28,6 +28,7 @@ type LoaderData = {
   exchange: Prisma.ParticipantGetPayload<
     typeof participantsWithExchangeAndReferrer
   >;
+  giftCount: number;
   grandReferrer: Prisma.ParticipantGetPayload<typeof grandReferrerInfo>;
 };
 
@@ -61,13 +62,25 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   });
   invariant(grandReferrer, "should be a grandReferrer");
 
-  const data: LoaderData = { exchange, grandReferrer };
+  // Get all the participants referred by the current participant
+  // and return the count of their referrals
+  const referralsCount = await db.participant.findMany({
+    select: { _count: { select: { Referrals: true } } },
+    where: { referrerId: participantId }
+  });
+  // Sum all the referrals
+  const giftCount = referralsCount.reduce(
+    (accumulator, currentValue) => accumulator + currentValue._count.Referrals,
+    0
+  );
+
+  const data: LoaderData = { exchange, giftCount, grandReferrer };
 
   return json(data);
 };
 
 export default function ParticipatingExchange() {
-  const { exchange, grandReferrer } = useLoaderData<LoaderData>();
+  const { exchange, giftCount, grandReferrer } = useLoaderData<LoaderData>();
   return (
     <div>
       <h2>Your secret dog</h2>
@@ -90,6 +103,9 @@ export default function ParticipatingExchange() {
       <code>{`https://localhost/invite/${exchange.id}`}</code>
       <h3>
         Number of referrals: <strong>{exchange.Referrals.length}</strong>
+        <h3>
+          Estimated Number of gifts received: <strong>{giftCount}</strong>
+        </h3>
       </h3>
     </div>
   );

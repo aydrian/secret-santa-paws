@@ -60,7 +60,7 @@ export default function Dashboard() {
       <ul>
         {participatingExchanges.map((partExchange) => {
           return (
-            <li>
+            <li key={partExchange.id}>
               <NavLink to={partExchange.id}>
                 {partExchange.Exchange.title}
               </NavLink>
