@@ -7,7 +7,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from '@remix-run/react';
+
 import GitHubLogo from './components/github-logo';
 import styles from './styles/app.css';
 
@@ -20,6 +22,8 @@ export const meta: MetaFunction = () => ({
   title: 'New Remix App',
   viewport: 'width=device-width,initial-scale=1',
 });
+
+
 
 export const CatchBoundary = () => {
   return (
@@ -46,6 +50,9 @@ export const CatchBoundary = () => {
 };
 
 export default function App() {
+  const location = useLocation()
+  const isIndex = location.pathname == '/' ? true : false
+  
   return (
     <html lang='en'>
       <head>
@@ -53,17 +60,17 @@ export default function App() {
         <Links />
       </head>
       <body className='prose min-h-screen'>
-        <header className='absolute right-0 top-0 w-screen'>
-          <div className='flex justify-end px-4 py-2'>
-            <ul className='flex gap-2 m-0 p-0 list-none'>
-              <li>
+        <header className={`${isIndex ? 'fixed' : 'relative bg-red-500'} right-0 top-0 w-screen`}>
+          <div className='p-4'>
+            <ul className='flex items-center justify-between gap-2 m-0 p-0 list-none w-full'>
+              <li className='m-0'>
                 <a
                   className='no-underline text-inherit'
                   href='https://github.com/aydrian/secret-santa-paws'
                   target='_blank'
                   rel='noreferrer'
                 >
-                  <GitHubLogo className='fill-white lg:fill-gray-800' />
+                  <GitHubLogo className='fill-white' />
                 </a>
               </li>
             </ul>
@@ -73,9 +80,9 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        <footer className='absolute left-0 bottom-0 w-screen'>
+        <footer className={`${isIndex ? 'fixed' : 'relative'} bg-white lg:bg-transparent left-0 bottom-0 w-screen`}>
           <div className='p-4'>
-            <ul className='flex justify-between lg:justify-start gap-2 m-0 p-0 list-none text-xs text-gray-500 lg:text-red-100'>
+            <ul className={`flex justify-between lg:justify-start gap-2 m-0 p-0 list-none text-xs text-gray-500 ${isIndex ? 'lg:text-red-100' : 'lg:text-gray-500'}`}>
               <li>
                 <a
                   className='no-underline text-inherit'

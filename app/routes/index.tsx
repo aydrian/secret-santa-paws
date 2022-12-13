@@ -113,7 +113,7 @@ export default function Index() {
           </p>
         </div>
       </section>
-      <section className='flex flex-col lg:justify-center bg-white p-4 sm:p-8'>
+      <section className='flex flex-col lg:justify-center bg-white p-4 sm:p-8 my-16 lg:my-0'>
         <div className='lg:max-w-xl'>
           <h3 className='font-bold'>Login</h3>
           <Form method='post' className='grid gap-4'>
