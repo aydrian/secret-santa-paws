@@ -458,6 +458,37 @@ pre {
   word-break: break-all;
 }
 
+.nav-link {
+  margin: 0px;
+  border-radius: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  text-decoration-line: none;
+}
+
+.nav-link:hover {
+  background-color: rgb(248 113 113 / 0.3);
+}
+
+@media (min-width: 640px) {
+  .nav-link {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+.nav-link.active {
+  background-color: rgb(248 113 113 / 0.4);
+  font-weight: 700;
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -1030,14 +1061,6 @@ pre {
   position: relative;
 }
 
-.right-0 {
-  right: 0px;
-}
-
-.top-0 {
-  top: 0px;
-}
-
 .left-0 {
   left: 0px;
 }
@@ -1046,12 +1069,16 @@ pre {
   bottom: 0px;
 }
 
-.m-0 {
-  margin: 0px;
+.right-0 {
+  right: 0px;
 }
 
-.m-2 {
-  margin: 0.5rem;
+.top-0 {
+  top: 0px;
+}
+
+.m-0 {
+  margin: 0px;
 }
 
 .mx-auto {
@@ -1062,11 +1089,6 @@ pre {
 .my-16 {
   margin-top: 4rem;
   margin-bottom: 4rem;
-}
-
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .mb-4 {
@@ -1097,28 +1119,20 @@ pre {
   height: 1.5rem;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-5 {
-  height: 1.25rem;
+.max-h-\[350px\] {
+  max-height: 350px;
 }
 
 .min-h-screen {
   min-height: 100vh;
 }
 
-.w-screen {
-  width: 100vw;
+.min-h-\[70px\] {
+  min-height: 70px;
 }
 
-.w-full {
-  width: 100%;
+.w-screen {
+  width: 100vw;
 }
 
 .w-6 {
@@ -1129,52 +1143,16 @@ pre {
   width: 75%;
 }
 
-.w-4 {
-  width: 1rem;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-5 {
-  width: 1.25rem;
-}
-
-.w-1\/4 {
-  width: 25%;
-}
-
 .max-w-2xl {
   max-width: 42rem;
-}
-
-.grow-0 {
-  flex-grow: 0;
 }
 
 .list-none {
   list-style-type: none;
 }
 
-.flex-row {
-  flex-direction: row;
-}
-
 .flex-col {
   flex-direction: column;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.place-items-center {
-  place-items: center;
-}
-
-.items-end {
-  align-items: flex-end;
 }
 
 .items-center {
@@ -1201,24 +1179,16 @@ pre {
   gap: 2rem;
 }
 
-.gap-1 {
-  gap: 0.25rem;
-}
-
 .gap-6 {
   gap: 1.5rem;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .rounded {
   border-radius: 0.25rem;
-}
-
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
-.rounded-xl {
-  border-radius: 0.75rem;
 }
 
 .rounded-full {
@@ -1227,11 +1197,6 @@ pre {
 
 .border {
   border-width: 1px;
-}
-
-.border-gray-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
 .border-gray-200 {
@@ -1252,21 +1217,6 @@ pre {
 .bg-teal-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(20 184 166 / var(--tw-bg-opacity));
-}
-
-.bg-gray-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.bg-teal-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 246 228 / var(--tw-bg-opacity));
-}
-
-.bg-teal-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(94 234 212 / var(--tw-bg-opacity));
 }
 
 .bg-teal-400 {
@@ -1294,8 +1244,14 @@ pre {
   padding: 0px;
 }
 
-.p-1 {
-  padding: 0.25rem;
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .px-4 {
@@ -1306,16 +1262,6 @@ pre {
 .py-16 {
   padding-top: 4rem;
   padding-bottom: 4rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 
 .text-center {
@@ -1346,18 +1292,13 @@ pre {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-inherit {
-  color: inherit;
-}
-
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
-.text-gray-300 {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
+.text-inherit {
+  color: inherit;
 }
 
 .text-gray-400 {
@@ -1376,6 +1317,14 @@ pre {
 
   .sm\:w-3\/4 {
     width: 75%;
+  }
+
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+
+  .sm\:items-start {
+    align-items: flex-start;
   }
 
   .sm\:p-8 {

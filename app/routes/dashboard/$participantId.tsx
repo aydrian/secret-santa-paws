@@ -93,8 +93,8 @@ export default function ParticipatingExchange() {
   ];
 
   return (
-    <div>
-      <h2>Your secret dog</h2>
+    <div className='flex flex-col gap-4'>
+      <h2 className='m-0'>Your secret dog</h2>
       <div className='flex flex-col border border-gray-200 rounded p-4 gap-8'>
         <div className='flex flex-col'>
           <span className='text-xs text-gray-400'>Name</span>
