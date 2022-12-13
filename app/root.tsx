@@ -12,14 +12,56 @@ import {
 
 import styles from './styles/app.css';
 
+const siteUrl = 'https://www.cockroachlabs.com/demos/secret-santa-paws';
+const name = 'Secret Santa Paws';
+const description = 'A Gift Exchange App for Dogs';
+const defaultImage = `${siteUrl}/images/secret-santa-paws-open-graph-image.jpg`;
+const twitter = '@itsaydrian';
+
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }];
+  return [
+    { rel: 'stylesheet', href: styles },
+    {
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: `${siteUrl}/images/favicon.ico`,
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      href: `${siteUrl}/images/favicon-16x16.png`,
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      href: `${siteUrl}/images/favicon-32x32.png`,
+    },
+  ];
 };
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'New Remix App',
   viewport: 'width=device-width,initial-scale=1',
+  title: name,
+  cannonical: siteUrl,
+  description: description,
+  image: defaultImage,
+  'image:alt': description,
+  'og:type': 'website',
+  'og:title': name,
+  'og:url': siteUrl,
+  'og:description': description,
+  'og:image': defaultImage,
+  'og:image:alt': description,
+  'twitter:card': 'summary_large_image',
+  'twitter:site': twitter,
+  'twitter:creator': twitter,
+  'twitter:title': name,
+  'twitter:description': description,
+  'twitter:image': defaultImage,
+  'twitter:image:alt': description,
 });
 
 export const CatchBoundary = () => {
