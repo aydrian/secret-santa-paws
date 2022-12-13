@@ -1,104 +1,104 @@
-import { ActionFunction, LoaderFunction } from "@remix-run/node";
-import type { Participant } from "@prisma/client";
-import { json, Response } from "@remix-run/node";
+import { ActionFunction, LoaderFunction } from "@remix-run/node"
+import type { Participant } from "@prisma/client"
+import { json, Response } from "@remix-run/node"
 import {
   Form,
   Link,
   useCatch,
   useLoaderData,
-  useLocation
-} from "@remix-run/react";
-import invariant from "tiny-invariant";
-import { db } from "~/utils/db.server";
-import { createUserSession, getUser, register } from "~/utils/session.server";
+  useLocation,
+} from "@remix-run/react"
+import invariant from "tiny-invariant"
+import { db } from "~/utils/db.server"
+import { createUserSession, getUser, register } from "~/utils/session.server"
 
 type LoaderData = {
-  participant: Participant;
+  participant: Participant
   user: {
-    id: string;
-    name: string;
-    email: string;
-  } | null;
-};
+    id: string
+    name: string
+    email: string
+  } | null
+}
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const user = await getUser(request);
+  const user = await getUser(request)
   const participant = await db.participant.findUnique({
-    where: { id: params.participantId }
-  });
+    where: { id: params.participantId },
+  })
 
   if (!participant) {
     throw new Response("Not Found", {
-      status: 404
-    });
+      status: 404,
+    })
   }
-  const data: LoaderData = { participant, user };
+  const data: LoaderData = { participant, user }
 
-  return json(data);
-};
+  return json(data)
+}
 
 function validatePassword(password: unknown) {
   if (typeof password !== "string" || password.length < 6) {
-    return `Passwords must be at least 6 characters long`;
+    return `Passwords must be at least 6 characters long`
   }
 }
 
 function validateConfirmPassword(password: unknown, confirmPassword: unknown) {
   if (password !== confirmPassword) {
-    return `Password and confirm password must match`;
+    return `Password and confirm password must match`
   }
 }
 
 type ActionData = {
-  formError?: string;
+  formError?: string
   fieldErrors?: {
-    exchangeId?: string | undefined;
-    address1?: string | undefined;
-    address2?: string | undefined;
-    city?: string | undefined;
-    state?: string | undefined;
-    zip?: string | undefined;
-    country?: string | undefined;
-    dogType?: string | undefined;
-    agree?: boolean | undefined;
-    name?: string | undefined;
-    email?: string | undefined;
-    password?: string | undefined;
-    confirmPassword?: string | undefined;
-  };
+    exchangeId?: string | undefined
+    address1?: string | undefined
+    address2?: string | undefined
+    city?: string | undefined
+    state?: string | undefined
+    zip?: string | undefined
+    country?: string | undefined
+    dogType?: string | undefined
+    agree?: boolean | undefined
+    name?: string | undefined
+    email?: string | undefined
+    password?: string | undefined
+    confirmPassword?: string | undefined
+  }
   fields?: {
-    exchangeId?: string;
-    address1?: string;
-    address2?: string;
-    city?: string;
-    state?: string;
-    zip?: string;
-    country?: string;
-    dogType?: string;
-    agree?: boolean;
-    name?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
-  };
-};
+    exchangeId?: string
+    address1?: string
+    address2?: string
+    city?: string
+    state?: string
+    zip?: string
+    country?: string
+    dogType?: string
+    agree?: boolean
+    name?: string
+    email?: string
+    password?: string
+    confirmPassword?: string
+  }
+}
 
-const badRequest = (data: ActionData) => json(data, { status: 400 });
+const badRequest = (data: ActionData) => json(data, { status: 400 })
 
 export const action: ActionFunction = async ({ params, request }) => {
-  const { participantId } = params;
-  invariant(participantId, "participantId query param must exist");
-  const form = await request.formData();
-  const exchangeId = form.get("exchangeId");
-  const address1 = form.get("address1");
-  const address2 = form.get("address2");
-  const city = form.get("city");
-  const state = form.get("state");
-  const zip = form.get("zip");
-  const country = form.get("country");
-  const dogType = form.get("dogType");
-  const agree = Boolean(form.get("agree"));
-  let userId = form.get("userId");
+  const { participantId } = params
+  invariant(participantId, "participantId query param must exist")
+  const form = await request.formData()
+  const exchangeId = form.get("exchangeId")
+  const address1 = form.get("address1")
+  const address2 = form.get("address2")
+  const city = form.get("city")
+  const state = form.get("state")
+  const zip = form.get("zip")
+  const country = form.get("country")
+  const dogType = form.get("dogType")
+  const agree = Boolean(form.get("agree"))
+  let userId = form.get("userId")
   if (
     typeof exchangeId !== "string" ||
     typeof address1 !== "string" ||
@@ -110,7 +110,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     typeof dogType !== "string" ||
     typeof agree !== "boolean"
   ) {
-    return badRequest({ formError: `Form not submitted correctly.` });
+    return badRequest({ formError: `Form not submitted correctly.` })
   }
 
   let fields = {
@@ -123,8 +123,8 @@ export const action: ActionFunction = async ({ params, request }) => {
     country,
     dogType,
     agree,
-    userId
-  };
+    userId,
+  }
   let fieldErrors = {
     exchangeId: undefined,
     address1: undefined,
@@ -134,25 +134,25 @@ export const action: ActionFunction = async ({ params, request }) => {
     zip: undefined,
     country: undefined,
     dogType: undefined,
-    agree: undefined
-  };
+    agree: undefined,
+  }
   if (Object.values(fieldErrors).some(Boolean)) {
-    return badRequest({ fieldErrors, fields });
+    return badRequest({ fieldErrors, fields })
   }
 
   // If no user, we need to create one.
   if (!userId) {
-    const name = form.get("name");
-    const email = form.get("email");
-    const password = form.get("password");
-    const confirmPassword = form.get("confirmPassword");
+    const name = form.get("name")
+    const email = form.get("email")
+    const password = form.get("password")
+    const confirmPassword = form.get("confirmPassword")
     if (
       typeof name !== "string" ||
       typeof email !== "string" ||
       typeof password !== "string" ||
       typeof confirmPassword !== "string"
     ) {
-      return badRequest({ formError: `Form not submitted correctly.` });
+      return badRequest({ formError: `Form not submitted correctly.` })
     }
 
     // TODO: Validation for login fields
@@ -168,12 +168,12 @@ export const action: ActionFunction = async ({ params, request }) => {
     //   return badRequest({ fieldErrors, fields });
     // }
 
-    const user = await register({ name, email, password });
-    userId = user.id;
+    const user = await register({ name, email, password })
+    userId = user.id
   }
 
   if (typeof userId !== "string") {
-    return badRequest({ formError: `Form not submitted correctly.` });
+    return badRequest({ formError: `Form not submitted correctly.` })
   }
 
   // Add them as a participate
@@ -188,16 +188,16 @@ export const action: ActionFunction = async ({ params, request }) => {
       state,
       zip,
       country,
-      dogType
-    }
-  });
+      dogType,
+    },
+  })
 
-  return createUserSession(userId, "/dashboard");
-};
+  return createUserSession(userId, "/dashboard")
+}
 
 export default function ParticipantInvite() {
-  const { user, participant } = useLoaderData<LoaderData>();
-  const location = useLocation();
+  const { user, participant } = useLoaderData<LoaderData>()
+  const location = useLocation()
   return (
     <div>
       <p>
@@ -307,20 +307,20 @@ export default function ParticipantInvite() {
         <button type="submit">I'm in!</button>
       </Form>
     </div>
-  );
+  )
 }
 
 export function CatchBoundary() {
-  const caught = useCatch();
+  const caught = useCatch()
   if (caught.status === 404) {
     return (
       <div className="error-container">
         "Sorry. No gift exchange exists for this participant. Please check the
         link and try again."
       </div>
-    );
+    )
   }
-  throw new Error(`Unhandled error: ${caught.status}`);
+  throw new Error(`Unhandled error: ${caught.status}`)
 }
 
 // export function ErrorBoundary() {

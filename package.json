@@ -16,7 +16,8 @@
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "start": "cross-env NODE_ENV=production netlify dev",
     "typecheck": "tsc -b",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pretty-quick": "pretty-quick"
   },
   "dependencies": {
     "@netlify/functions": "^1.3.0",
