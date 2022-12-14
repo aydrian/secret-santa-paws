@@ -1,27 +1,27 @@
-import bcrypt from "bcryptjs"
-import { PrismaClient } from "@prisma/client"
-const db = new PrismaClient()
+import bcrypt from "bcryptjs";
+import { PrismaClient } from "@prisma/client";
+const db = new PrismaClient();
 
 type ParticipantIds = {
-  id1: string
-  id2: string
-  id3: string
-}
+  id1: string;
+  id2: string;
+  id3: string;
+};
 
 async function seed() {
   // Create 3 users
-  const users = await getUsers()
+  const users = await getUsers();
 
   const [user1, user2, user3] = await Promise.all(
     users.map((user) => {
-      return db.user.create({ data: user })
+      return db.user.create({ data: user });
     })
-  )
+  );
 
   // Create a Test Exchange
   const exchange = await db.exchange.create({
     data: { title: "Test Exchange", ownerId: user1.id },
-  })
+  });
 
   const tmp = {
     address1: "125 W 25th St",
@@ -33,13 +33,13 @@ async function seed() {
     dogType: "Corgi",
     userId: "",
     exchangeId: exchange.id,
-  }
+  };
 
   // Make Users participants of exchange
   // Grab 3 UUIDs to use as participantIds
   const [participantIds] = await db.$queryRaw<
     Array<ParticipantIds>
-  >`SELECT gen_random_uuid() AS "id1", gen_random_uuid() AS "id2", gen_random_uuid() AS "id2" `
+  >`SELECT gen_random_uuid() AS "id1", gen_random_uuid() AS "id2", gen_random_uuid() AS "id2" `;
   const [participant1, participant2, participant3] = await Promise.all(
     [
       {
@@ -61,9 +61,9 @@ async function seed() {
         referrerId: participantIds.id1,
       },
     ].map((participant) => {
-      return db.participant.create({ data: participant })
+      return db.participant.create({ data: participant });
     })
-  )
+  );
 }
 
 async function getUsers() {
@@ -83,7 +83,7 @@ async function getUsers() {
       email: "devrel+clyde@cockroachlabs.com",
       passwordHash: await bcrypt.hash("distributive", 10),
     },
-  ]
+  ];
 }
 
-seed()
+seed();

@@ -1,27 +1,27 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/node"
-import { json, redirect } from "@remix-run/node"
-import { Form, useActionData, useSearchParams } from "@remix-run/react"
-import SecretSantaPawsLogo from "~/components/secret-santa-paws-logo"
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
+import SecretSantaPawsLogo from "~/components/secret-santa-paws-logo";
 
-import { login, createUserSession, getUserId } from "~/utils/session.server"
+import { login, createUserSession, getUserId } from "~/utils/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request)
+  const userId = await getUserId(request);
   if (userId) {
-    return redirect("/dashboard")
+    return redirect("/dashboard");
   }
-  return { ok: true }
-}
+  return { ok: true };
+};
 
 function validateEmail(email: unknown) {
   if (typeof email !== "string" || email.length < 3) {
-    return `Emails must be at least 3 characters long`
+    return `Emails must be at least 3 characters long`;
   }
 }
 
 function validatePassword(password: unknown) {
   if (typeof password !== "string" || password.length < 6) {
-    return `Passwords must be at least 6 characters long`
+    return `Passwords must be at least 6 characters long`;
   }
 }
 
@@ -34,49 +34,49 @@ function validatePassword(password: unknown) {
 // }
 
 type ActionData = {
-  formError?: string
-  fieldErrors?: { email: string | undefined; password: string | undefined }
-  fields?: { email: string; password: string }
-}
+  formError?: string;
+  fieldErrors?: { email: string | undefined; password: string | undefined };
+  fields?: { email: string; password: string };
+};
 
-const badRequest = (data: ActionData) => json(data, { status: 400 })
+const badRequest = (data: ActionData) => json(data, { status: 400 });
 
 export const action: ActionFunction = async ({ request }) => {
-  const form = await request.formData()
-  const email = form.get("email")
-  const password = form.get("password")
+  const form = await request.formData();
+  const email = form.get("email");
+  const password = form.get("password");
   // const redirectTo = validateUrl(form.get("redirectTo") || "/dashboard");
-  const redirectTo = form.get("redirectTo") || "/dashboard"
+  const redirectTo = form.get("redirectTo") || "/dashboard";
   if (
     typeof email !== "string" ||
     typeof password !== "string" ||
     typeof redirectTo !== "string"
   ) {
-    return badRequest({ formError: `Form not submitted correctly.` })
+    return badRequest({ formError: `Form not submitted correctly.` });
   }
 
-  const fields = { email, password }
+  const fields = { email, password };
   const fieldErrors = {
     email: validateEmail(email),
     password: validatePassword(password),
-  }
+  };
   if (Object.values(fieldErrors).some(Boolean)) {
-    return badRequest({ fieldErrors, fields })
+    return badRequest({ fieldErrors, fields });
   }
 
-  const user = await login({ email, password })
+  const user = await login({ email, password });
   if (!user) {
     return badRequest({
       fields,
       formError: `Email/Password combination is incorrect`,
-    })
+    });
   }
-  return createUserSession(user.id, redirectTo)
-}
+  return createUserSession(user.id, redirectTo);
+};
 
 export default function Index() {
-  const actionData = useActionData<ActionData>()
-  const [searchParams] = useSearchParams()
+  const actionData = useActionData<ActionData>();
+  const [searchParams] = useSearchParams();
   return (
     <main className="grid lg:grid-cols-2 gap-4 w-screen min-h-screen">
       <section className="flex flex-col gap-4 justify-center bg-red-500 p-4 sm:p-8">
@@ -164,5 +164,5 @@ export default function Index() {
         </div>
       </section>
     </main>
-  )
+  );
 }

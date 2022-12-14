@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent } from "react";
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 const GitHubLogo: FunctionComponent<Props> = ({ className }: Props) => {
@@ -26,7 +26,7 @@ const GitHubLogo: FunctionComponent<Props> = ({ className }: Props) => {
         </g>
       </svg>
     </>
-  )
-}
+  );
+};
 
-export default GitHubLogo
+export default GitHubLogo;

@@ -1,4 +1,4 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node"
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -6,15 +6,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react"
-import GitHubLogo from "./components/github-logo"
-import styles from "./styles/app.css"
+} from "@remix-run/react";
+import GitHubLogo from "./components/github-logo";
+import styles from "./styles/app.css";
 
-const siteUrl = "https://www.cockroachlabs.com/demos/secret-santa-paws"
-const name = "Secret Santa Paws"
-const description = "A Gift Exchange App for Dogs"
-const defaultImage = `${siteUrl}/images/secret-santa-paws-open-graph-image.jpg`
-const twitter = "@itsaydrian"
+const siteUrl = "https://www.cockroachlabs.com/demos/secret-santa-paws";
+const name = "Secret Santa Paws";
+const description = "A Gift Exchange App for Dogs";
+const defaultImage = `${siteUrl}/images/secret-santa-paws-open-graph-image.jpg`;
+const twitter = "@itsaydrian";
 
 export const links: LinksFunction = () => {
   return [
@@ -36,8 +36,8 @@ export const links: LinksFunction = () => {
       sizes: "32x32",
       href: `${siteUrl}/images/favicon-32x32.png`,
     },
-  ]
-}
+  ];
+};
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -60,7 +60,7 @@ export const meta: MetaFunction = () => ({
   "twitter:description": description,
   "twitter:image": defaultImage,
   "twitter:image:alt": description,
-})
+});
 
 export default function App() {
   return (
@@ -118,5 +118,5 @@ export default function App() {
         </footer>
       </body>
     </html>
-  )
+  );
 }

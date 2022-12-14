@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react"
+import { FunctionComponent } from "react";
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 const SecretSantaPawsLogo: FunctionComponent<Props> = ({
@@ -316,7 +316,7 @@ const SecretSantaPawsLogo: FunctionComponent<Props> = ({
         </g>
       </svg>
     </>
-  )
-}
+  );
+};
 
-export default SecretSantaPawsLogo
+export default SecretSantaPawsLogo;
