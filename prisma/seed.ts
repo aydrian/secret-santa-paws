@@ -20,7 +20,7 @@ async function seed() {
 
   // Create a Test Exchange
   const exchange = await db.exchange.create({
-    data: { title: "Test Exchange", ownerId: user1.id }
+    data: { title: "Test Exchange", ownerId: user1.id },
   });
 
   const tmp = {
@@ -32,7 +32,7 @@ async function seed() {
     country: "USA",
     dogType: "Corgi",
     userId: "",
-    exchangeId: exchange.id
+    exchangeId: exchange.id,
   };
 
   // Make Users participants of exchange
@@ -46,20 +46,20 @@ async function seed() {
         ...tmp,
         id: participantIds.id1,
         userId: user1.id,
-        referrerId: participantIds.id2
+        referrerId: participantIds.id2,
       },
       {
         ...tmp,
         id: participantIds.id2,
         userId: user2.id,
-        referrerId: participantIds.id3
+        referrerId: participantIds.id3,
       },
       {
         ...tmp,
         id: participantIds.id3,
         userId: user3.id,
-        referrerId: participantIds.id1
-      }
+        referrerId: participantIds.id1,
+      },
     ].map((participant) => {
       return db.participant.create({ data: participant });
     })
@@ -71,18 +71,18 @@ async function getUsers() {
     {
       name: "Craig the Cockroach",
       email: "devrel+craig@cockroachlabs.com",
-      passwordHash: await bcrypt.hash("resilience", 10)
+      passwordHash: await bcrypt.hash("resilience", 10),
     },
     {
       name: "Cindy",
       email: "devrel+cindy@cockroachlabs.com",
-      passwordHash: await bcrypt.hash("scale", 10)
+      passwordHash: await bcrypt.hash("scale", 10),
     },
     {
       name: "Clyde",
       email: "devrel+clyde@cockroachlabs.com",
-      passwordHash: await bcrypt.hash("distributive", 10)
-    }
+      passwordHash: await bcrypt.hash("distributive", 10),
+    },
   ];
 }
 

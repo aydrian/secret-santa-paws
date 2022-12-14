@@ -8,7 +8,7 @@ import { Prisma } from "@prisma/client";
 
 const participantsWithExchangeAndReferrer =
   Prisma.validator<Prisma.ParticipantArgs>()({
-    include: { Exchange: true, Referrer: true, Referrals: true }
+    include: { Exchange: true, Referrer: true, Referrals: true },
   });
 
 const grandReferrerInfo = Prisma.validator<Prisma.ParticipantArgs>()({
@@ -20,8 +20,8 @@ const grandReferrerInfo = Prisma.validator<Prisma.ParticipantArgs>()({
     zip: true,
     country: true,
     dogType: true,
-    User: { select: { name: true } }
-  }
+    User: { select: { name: true } },
+  },
 });
 
 type LoaderData = {
@@ -38,12 +38,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const exchange = await db.participant.findUnique({
     where: { id: participantId },
-    include: { Exchange: true, Referrer: true, Referrals: true }
+    include: { Exchange: true, Referrer: true, Referrals: true },
   });
 
   if (!exchange || exchange.userId !== userId) {
     throw new Response("Not Found", {
-      status: 404
+      status: 404,
     });
   }
 
@@ -56,9 +56,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       zip: true,
       country: true,
       dogType: true,
-      User: { select: { name: true } }
+      User: { select: { name: true } },
     },
-    where: { id: exchange.Referrer.referrerId }
+    where: { id: exchange.Referrer.referrerId },
   });
   invariant(grandReferrer, "should be a grandReferrer");
 
@@ -66,7 +66,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   // and return the count of their referrals
   const referralsCount = await db.participant.findMany({
     select: { _count: { select: { Referrals: true } } },
-    where: { referrerId: participantId }
+    where: { referrerId: participantId },
   });
   // Sum all the referrals
   const giftCount = referralsCount.reduce(

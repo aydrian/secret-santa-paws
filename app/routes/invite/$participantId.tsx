@@ -6,7 +6,7 @@ import {
   Link,
   useCatch,
   useLoaderData,
-  useLocation
+  useLocation,
 } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { db } from "~/utils/db.server";
@@ -24,12 +24,12 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const user = await getUser(request);
   const participant = await db.participant.findUnique({
-    where: { id: params.participantId }
+    where: { id: params.participantId },
   });
 
   if (!participant) {
     throw new Response("Not Found", {
-      status: 404
+      status: 404,
     });
   }
   const data: LoaderData = { participant, user };
@@ -123,7 +123,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     country,
     dogType,
     agree,
-    userId
+    userId,
   };
   let fieldErrors = {
     exchangeId: undefined,
@@ -134,7 +134,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     zip: undefined,
     country: undefined,
     dogType: undefined,
-    agree: undefined
+    agree: undefined,
   };
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({ fieldErrors, fields });
@@ -188,8 +188,8 @@ export const action: ActionFunction = async ({ params, request }) => {
       state,
       zip,
       country,
-      dogType
-    }
+      dogType,
+    },
   });
 
   return createUserSession(userId, "/dashboard");

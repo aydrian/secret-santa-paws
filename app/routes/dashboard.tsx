@@ -14,10 +14,10 @@ const dashboardUser = Prisma.validator<Prisma.UserArgs>()({
     Participants: {
       select: {
         id: true,
-        Exchange: { select: { title: true, isArchived: true } }
-      }
-    }
-  }
+        Exchange: { select: { title: true, isArchived: true } },
+      },
+    },
+  },
 });
 
 type LoaderData = {
@@ -34,11 +34,11 @@ export const loader: LoaderFunction = async ({ request }) => {
       Participants: {
         select: {
           id: true,
-          Exchange: { select: { title: true, isArchived: true } }
-        }
-      }
+          Exchange: { select: { title: true, isArchived: true } },
+        },
+      },
     },
-    where: { id: userId }
+    where: { id: userId },
   });
   invariant(user, "Expected user to be a user");
 

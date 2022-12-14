@@ -8,7 +8,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const latestPart = await db.participant.findFirst({
     select: { id: true },
     where: { userId },
-    orderBy: { createdAt: "desc" }
+    orderBy: { createdAt: "desc" },
   });
 
   if (latestPart) {
