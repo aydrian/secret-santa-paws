@@ -1,26 +1,26 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
-import { Form, useActionData, useSearchParams } from '@remix-run/react';
-import SecretSantaPawsLogo from '~/components/secret-santa-paws-logo';
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
+import SecretSantaPawsLogo from "~/components/secret-santa-paws-logo";
 
-import { login, createUserSession, getUserId } from '~/utils/session.server';
+import { login, createUserSession, getUserId } from "~/utils/session.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
   if (userId) {
-    return redirect('/dashboard');
+    return redirect("/dashboard");
   }
   return { ok: true };
 };
 
 function validateEmail(email: unknown) {
-  if (typeof email !== 'string' || email.length < 3) {
+  if (typeof email !== "string" || email.length < 3) {
     return `Emails must be at least 3 characters long`;
   }
 }
 
 function validatePassword(password: unknown) {
-  if (typeof password !== 'string' || password.length < 6) {
+  if (typeof password !== "string" || password.length < 6) {
     return `Passwords must be at least 6 characters long`;
   }
 }
@@ -43,14 +43,14 @@ const badRequest = (data: ActionData) => json(data, { status: 400 });
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
-  const email = form.get('email');
-  const password = form.get('password');
+  const email = form.get("email");
+  const password = form.get("password");
   // const redirectTo = validateUrl(form.get("redirectTo") || "/dashboard");
-  const redirectTo = form.get('redirectTo') || '/dashboard';
+  const redirectTo = form.get("redirectTo") || "/dashboard";
   if (
-    typeof email !== 'string' ||
-    typeof password !== 'string' ||
-    typeof redirectTo !== 'string'
+    typeof email !== "string" ||
+    typeof password !== "string" ||
+    typeof redirectTo !== "string"
   ) {
     return badRequest({ formError: `Form not submitted correctly.` });
   }
@@ -78,59 +78,59 @@ export default function Index() {
   const actionData = useActionData<ActionData>();
   const [searchParams] = useSearchParams();
   return (
-    <main className='grid lg:grid-cols-2 gap-4 w-screen min-h-screen'>
-      <section className='flex flex-col gap-4 justify-center bg-red-500 p-4 sm:p-8'>
-        <div className='max-w-2xl mx-auto lg:mr-0 lg:ml-auto'>
-          <SecretSantaPawsLogo className='w-3/4' />
-          <h1 className='sr-only'>Secret Santa Paws</h1>
-          <h2 className='m-0 text-center text-white'>
-            A Gift Exchange App for Dogs{' '}
-            <span aria-label='Christmas Gift'>🎁</span>
+    <main className="grid lg:grid-cols-2 gap-4 w-screen min-h-screen">
+      <section className="flex flex-col gap-4 justify-center bg-red-500 p-4 sm:p-8">
+        <div className="max-w-2xl mx-auto lg:mr-0 lg:ml-auto">
+          <SecretSantaPawsLogo className="w-3/4" />
+          <h1 className="sr-only">Secret Santa Paws</h1>
+          <h2 className="m-0 text-center text-white">
+            A Gift Exchange App for Dogs{" "}
+            <span aria-label="Christmas Gift">🎁</span>
           </h2>
-          <p className='text-center text-white mb-0 mx-auto sm:w-3/4'>
+          <p className="text-center text-white mb-0 mx-auto sm:w-3/4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
             efficitur vitae libero quis condimentum.
           </p>
-          <p className='text-center text-sm text-white mb-0'>
-            A{' '}
+          <p className="text-center text-sm text-white mb-0">
+            A{" "}
             <a
-              className='text-inherit'
-              href='https://www.cockroachlabs.com/'
-              target='_blank'
-              rel='noreferrer'
+              className="text-inherit"
+              href="https://www.cockroachlabs.com/"
+              target="_blank"
+              rel="noreferrer"
             >
               Cockroach Labs
-            </a>{' '}
-            Demo by{' '}
+            </a>{" "}
+            Demo by{" "}
             <a
-              className='text-inherit'
-              href='https://twitter.com/itsaydrian'
-              target='_blank'
-              rel='noreferrer'
+              className="text-inherit"
+              href="https://twitter.com/itsaydrian"
+              target="_blank"
+              rel="noreferrer"
             >
               Aydrian Howard
             </a>
           </p>
         </div>
       </section>
-      <section className='flex flex-col lg:justify-center bg-white p-4 sm:p-8'>
-        <div className='lg:max-w-xl'>
-          <h3 className='font-bold'>Login</h3>
-          <Form method='post' className='grid gap-4'>
+      <section className="flex flex-col lg:justify-center bg-white p-4 sm:p-8">
+        <div className="lg:max-w-xl">
+          <h3 className="font-bold">Login</h3>
+          <Form method="post" className="grid gap-4">
             <input
-              type='hidden'
-              name='redirectTo'
-              value={searchParams.get('redirectTo') ?? undefined}
+              type="hidden"
+              name="redirectTo"
+              value={searchParams.get("redirectTo") ?? undefined}
             />
             <label>
-              Email{' '}
+              Email{" "}
               <input
-                type='email'
-                name='email'
+                type="email"
+                name="email"
                 required
                 defaultValue={actionData?.fieldErrors?.email}
                 aria-errormessage={
-                  actionData?.fieldErrors?.email ? 'email-error' : undefined
+                  actionData?.fieldErrors?.email ? "email-error" : undefined
                 }
               />
             </label>
@@ -138,15 +138,15 @@ export default function Index() {
               <div>{actionData.fieldErrors.email}</div>
             ) : undefined}
             <label>
-              Password{' '}
+              Password{" "}
               <input
-                type='password'
-                name='password'
+                type="password"
+                name="password"
                 required
                 defaultValue={actionData?.fields?.password}
                 aria-errormessage={
                   actionData?.fieldErrors?.password
-                    ? 'password-error'
+                    ? "password-error"
                     : undefined
                 }
               />
@@ -157,7 +157,7 @@ export default function Index() {
             {actionData?.formError ? (
               <div>{actionData.formError}</div>
             ) : undefined}
-            <button type='submit' className='text-white bg-teal-500'>
+            <button type="submit" className="text-white bg-teal-500">
               Login
             </button>
           </Form>
