@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   invariant(user, "User must be logged in.");
 
   const data: LoaderData = {
-    user
+    user,
   };
 
   return json(data);
@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  console.log(Object.fromEntries(formData));
+  const values = Object.fromEntries(formData);
 
   return json({});
 };
@@ -49,31 +49,31 @@ export default function NewExchange() {
           <div>{user.email}</div>
           <label>
             Address 1:
-            <input type="text" name="par1['address1']" />
+            <input type="text" name="par1_address1" required />
           </label>
           <label>
             Address 2:
-            <input type="text" name="par1['address2']" />
+            <input type="text" name="par1_address2" />
           </label>
           <label>
             City:
-            <input type="text" name="par1['city']" />
+            <input type="text" name="par1_city" required />
           </label>
           <label>
             State:
-            <input type="text" name="par1['state']" />
+            <input type="text" name="par1_state" required />
           </label>
           <label>
             Zip:
-            <input type="text" name="par1['zip']" />
+            <input type="text" name="par1_zip" required />
           </label>
           <label>
             Country:
-            <input type="text" name="par1['country']" />
+            <input type="text" name="par1_country" required />
           </label>
           <label>
             Type of Dog:
-            <input type="text" name="par1['dogType']" />
+            <input type="text" name="par1_dogType" required />
           </label>
         </div>
         <h3>Participant 2</h3>
@@ -82,73 +82,121 @@ export default function NewExchange() {
           <label>
             <input
               type="radio"
-              name="par2['userType']"
+              name="par2_userType"
               value="new"
               defaultChecked
             />
             New
           </label>
           <label>
-            <input type="radio" name="par2['userType']" value="existing" />
+            <input type="radio" name="par2_userType" value="existing" />
             Existing
           </label>
         </fieldset>
         <label>
+          Name:
+          <input type="text" name="par2_name" />
+        </label>
+        <label>
+          Email:
+          <input type="email" name="par2_email" />
+        </label>
+        <label>
+          Password:
+          <input type="password" name="par2_password" />
+        </label>
+        <label>
+          Confirm Password:
+          <input type="password" name="par2_confirmPassword" />
+        </label>
+        <label>
           Address 1:
-          <input type="text" name="par2['address1']" />
+          <input type="text" name="par2_address1" required />
         </label>
         <label>
           Address 2:
-          <input type="text" name="par2['address2']" />
+          <input type="text" name="par2_address2" />
         </label>
         <label>
           City:
-          <input type="text" name="par2['city']" />
+          <input type="text" name="par2_city" required />
         </label>
         <label>
           State:
-          <input type="text" name="par2['state']" />
+          <input type="text" name="par2_state" required />
         </label>
         <label>
           Zip:
-          <input type="text" name="par2['zip']" />
+          <input type="text" name="par2_zip" required />
         </label>
         <label>
           Country:
-          <input type="text" name="par2['country']" />
+          <input type="text" name="par2_country" required />
         </label>
         <label>
           Type of Dog:
-          <input type="text" name="par2['dogType']" />
+          <input type="text" name="par2_dogType" required />
         </label>
         <h3>Participant 3</h3>
+        <fieldset>
+          <legend>New or Existing?</legend>
+          <label>
+            <input
+              type="radio"
+              name="par3_userType"
+              value="new"
+              defaultChecked
+            />
+            New
+          </label>
+          <label>
+            <input type="radio" name="par3_userType" value="existing" />
+            Existing
+          </label>
+        </fieldset>
+        <label>
+          Name:
+          <input type="text" name="par3_name" />
+        </label>
+        <label>
+          Email:
+          <input type="email" name="par3_email" />
+        </label>
+        <label>
+          Password:
+          <input type="password" name="par3_password" />
+        </label>
+        <label>
+          Confirm Password:
+          <input type="password" name="par3_confirmPassword" />
+        </label>
         <label>
           Address 1:
-          <input type="text" name="par3['address1']" />
+          <input type="text" name="par3_address1" required />
         </label>
         <label>
           Address 2:
-          <input type="text" name="par3['address2']" />
+          <input type="text" name="par3_address2" />
         </label>
         <label>
           City:
-          <input type="text" name="par3['city']" />
+          <input type="text" name="par3_city" required />
         </label>
         <label>
           State:
-          <input type="text" name="par3['state']" />
+          <input type="text" name="par3_state" required />
         </label>
         <label>
           Zip:
-          <input type="text" name="par3['zip']" />
+          <input type="text" name="par3_zip" required />
         </label>
         <label>
           Country:
-          <input type="text" name="par3['country']" />
+          <input type="text" name="par3_country" required />
         </label>
         <label>
           Type of Dog:
-          <input type="text" name="par3['dogType']" />
+          <input type="text" name="par3_dogType" required />
         </label>
         <button type="submit">Create</button>
       </Form>

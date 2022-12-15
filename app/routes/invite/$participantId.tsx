@@ -273,7 +273,7 @@ export default function ParticipantInvite() {
         )}
         <label>
           Address 1:
-          <input type="text" name="address1" />
+          <input type="text" name="address1" required />
         </label>
         <label>
           Address 2:
@@ -281,28 +281,28 @@ export default function ParticipantInvite() {
         </label>
         <label>
           City:
-          <input type="text" name="city" />
+          <input type="text" name="city" required />
         </label>
         <label>
           State:
-          <input type="text" name="state" />
+          <input type="text" name="state" required />
         </label>
         <label>
           Zip:
-          <input type="text" name="zip" />
+          <input type="text" name="zip" required />
         </label>
         <label>
           Country:
-          <input type="text" name="country" />
+          <input type="text" name="country" required />
         </label>
         <label>
           Type of Dog:
-          <input type="text" name="dogType" />
+          <input type="text" name="dogType" required />
         </label>
         <label>
           I agree to send one gift valued at least $10 to the secret dog
           assigned to me within one week.
-          <input type="checkbox" name="agree" />
+          <input type="checkbox" name="agree" required />
         </label>
         <button type="submit">I'm in!</button>
       </Form>
