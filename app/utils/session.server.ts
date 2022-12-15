@@ -13,7 +13,7 @@ export async function register({ name, email, password }: LoginForm) {
   name = name || email;
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
-    data: { name, email, passwordHash }
+    data: { name, email, passwordHash },
   });
   return { id: user.id, email };
 }
@@ -21,7 +21,7 @@ export async function register({ name, email, password }: LoginForm) {
 export async function login({ email, password }: LoginForm) {
   const user = await db.user.findUnique({
     select: { id: true, name: true, email: true, passwordHash: true },
-    where: { email }
+    where: { email },
   });
   if (!user) return null;
 
@@ -47,8 +47,8 @@ const storage = createCookieSessionStorage({
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
-    httpOnly: true
-  }
+    httpOnly: true,
+  },
 });
 
 function getUserSession(request: Request) {
@@ -84,7 +84,7 @@ export async function getUser(request: Request) {
   try {
     const user = await db.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, email: true }
+      select: { id: true, name: true, email: true },
     });
     return user;
   } catch {
@@ -96,8 +96,8 @@ export async function logout(request: Request) {
   const session = await getUserSession(request);
   return redirect("/", {
     headers: {
-      "Set-Cookie": await storage.destroySession(session)
-    }
+      "Set-Cookie": await storage.destroySession(session),
+    },
   });
 }
 
@@ -106,7 +106,7 @@ export async function createUserSession(userId: string, redirectTo: string) {
   session.set("userId", userId);
   return redirect(redirectTo, {
     headers: {
-      "Set-Cookie": await storage.commitSession(session)
-    }
+      "Set-Cookie": await storage.commitSession(session),
+    },
   });
 }
