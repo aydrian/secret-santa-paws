@@ -5,6 +5,8 @@ import SecretSantaPawsLogo from "~/components/secret-santa-paws-logo";
 
 import { login, createUserSession, getUserId } from "~/utils/session.server";
 
+import Header from "../components/header";
+
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
   if (userId) {
