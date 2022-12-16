@@ -111,27 +111,27 @@ export default function ParticipatingExchange() {
           </span>
           <span>{grandReferrer.country}</span>
         </div>
-        <div>
-          <span className="text-xs text-gray-400">Details</span>
-          <ul className="flex flex-cols gap-6 list-none m-0 p-0">
-            {details.map((detail, index) => {
-              const { title, value } = detail;
-              return (
-                <li key={index} className="m-0 p-0">
-                  <span className="flex items-center gap-1">
-                    {title}:
-                    <span className="flex items-center justify-center font-bold text-xs text-center rounded-full bg-teal-400 text-white w-6 h-6">
-                      {`x${value}`}
-                    </span>
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
       </div>
-      <h2>Your referral Link</h2>
+      <h2 className="m-0">Your referral Link</h2>
       <pre>{`https://localhost/invite/${exchange.id}`}</pre>
+      <h2 className="m-0">Tracking</h2>
+      <div className="flex flex-col border border-gray-200 rounded p-4 gap-8">
+        <ul className="flex flex-cols gap-6 list-none m-0 p-0">
+          {details.map((detail, index) => {
+            const { title, value } = detail;
+            return (
+              <li key={index} className="m-0 p-0">
+                <span className="flex items-center gap-1">
+                  {title}:
+                  <span className="flex items-center justify-center font-bold text-xs text-center rounded-full bg-teal-400 text-white w-6 h-6">
+                    {`x${value}`}
+                  </span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

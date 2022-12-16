@@ -90,8 +90,8 @@ export default function Index() {
             <span aria-label="Christmas Gift">🎁</span>
           </h2>
           <p className="text-center text-white mb-0 mx-auto sm:w-3/4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-            efficitur vitae libero quis condimentum.
+            Based on the social media meme. Participate in a gift exchange and
+            track your referrals and gifts.
           </p>
           <p className="text-center text-sm text-white mb-0">
             A{" "}

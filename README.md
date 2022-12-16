@@ -1,7 +1,38 @@
-# Welcome to Remix!
+# Secret Santa Paws 🐾 Gift Exchange 🎁
+
+A gift exchange for dogs based on the social media meme.
 
 - [Remix Docs](https://remix.run/docs)
 - [Netlify Functions](https://www.netlify.com/products/functions/)
+
+## 🥞 Stack
+
+- Framework - [Remix](https://remix.run/)
+- Language - [TypeScript](https://www.typescriptlang.org/)
+- Database - [CockroachDB serverless](https://www.cockroachlabs.com/product/)
+- ORM - [Prisma](https://prisma.io/)
+- Hosting - [Netlify](https://netlify.com/)
+- Styling - [Tailwind CSS](https://tailwindcss.com/)
+
+## Setup
+
+1. Clone this repo
+1. Create a `.env` file using the provided `.env.example`
+   ```
+   cp .env.example .env
+   ```
+1. Create a [free CockroachDB Serverless account and cluster](https://cockroachlabs.cloud/signup?referralId=sample_app)
+
+1. Add your database url to the `.env` file
+1. Run Prisma migrate to create the database schema
+   ```
+   npx prisma migrate deploy
+   ```
+1. Run `row-level-ttl.sql` script to activate row level ttl
+   ```
+   npx prisma db execute --file ./prisma/row-level-ttl.sql --schema schema.prisma
+   ```
+1. Update the `SESSION_SECRET` variable with any string in your `.env` file.
 
 ## Netlify Setup
 
